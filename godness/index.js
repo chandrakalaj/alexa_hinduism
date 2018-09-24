@@ -47,15 +47,14 @@ const handlers = {
             var factIndex = Math.floor(Math.random() * factArr.length);
             var randomFact = factArr[factIndex];
             speechOutput = randomFact;
+            console.log("output::::::"+speechOutput);
+            this.response.cardRenderer(SKILL_NAME, randomFact);
+            this.response.speak(speechOutput);
+            this.emit(':responseReady');
         }else{
             speechOutput = "I am learning. As of now, I do not know about Lord " + god; 
+            this.emit(':tell', speechOutput);
         }
-        speechOutput = speechOutput + ", Do you want to know more about hindu gods or festivals?";
-        console.log("output::::::"+speechOutput);
-        this.response.cardRenderer(SKILL_NAME, randomFact);
-        this.response.speak(speechOutput);
-        this.emit(':ask',speechOutput,HELP_MESSAGE);
-
     },
     'festivals': function(){
         var festival = this.event.request.intent.slots.festival.value;
@@ -64,23 +63,22 @@ const handlers = {
         var speechOutput = null;
         if(info){
             speechOutput = info;
+            console.log("output::::::"+speechOutput);
+            this.response.cardRenderer(SKILL_NAME, speechOutput);
+            this.response.speak(speechOutput);
+            this.emit(':responseReady');
+
         }else if(festival){
-            speechOutput = "I am learning. As of now, I do not know about " + festival; 
+            speechOutput = "I am learning. As of now, I do not know about " + festival;
+            console.log("output::::::"+speechOutput);
+            this.response.cardRenderer(SKILL_NAME, speechOutput);
+            this.response.speak(speechOutput);
+            this.emit(':responseReady');
         }else{
             speechOutput = "I am sorry I couldn't get that.";
-        }
-        console.log("output::::::"+speechOutput);
-        this.response.cardRenderer(SKILL_NAME, speechOutput);
-        this.response.speak(speechOutput);
-        this.emit(':ask',speechOutput,HELP_MESSAGE);
-    },
-    'generic_festivals': function(){
-        const speechOutput = 'There are many festivals celebrated by hindus in India. Mainly, Diwali, Holi, Onam, Maha Shivaratri, Krishna Janmashtami, Makar Sankranti, Ganesh Chaturthi, Navratri, Rama Navami, Ugadi and much more. Do you want to know in detail about any of these festivals?'
-        const reprompt = HELP_REPROMPT;
-
-        this.response.cardRenderer(SKILL_NAME, speechOutput);
-        this.response.speak(speechOutput);
-        this.emit(':ask',speechOutput,reprompt);
+            this.emit(':responseReady');
+        } 
+       
     },
     'AMAZON.HelpIntent': function () {
         const speechOutput = HELP_MESSAGE;
@@ -98,7 +96,8 @@ const handlers = {
         this.emit(':responseReady');
     },
     'SessionEndedRequest': function () {
-        console.log('session ended!');
+        const speech_output = 'Goodbye and take care!'
+        this.emit(':tell', speech_output);
     },
     'Unhandled': function () {
         const speech_output = 'Goodbye and take care!'
