@@ -1,0 +1,11 @@
+{
+  "name": "hindu-culture",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Chandrakala Jayachandran",
+  "license": "ISC",
+  "dependencies": {
+    "alexa-sdk": "^1.0.25",
+    "hashmap": "^2.3.0"
+  }
+}
